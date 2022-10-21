@@ -90,10 +90,9 @@ class UI {
       rowCita.appendChild(editarBtn);
 
       listaCursos.appendChild(rowCita);
-
-      let citasString = JSON.stringify(citas);
-      localStorage.setItem('citas', citasString);
     });
+
+    sincronizarDatos();
   }
 
   limpiarHTML() {
@@ -114,7 +113,7 @@ callEventListeners();
 
 function callEventListeners() {
   document.addEventListener('DOMContentLoaded', () => {
-    const citasObtenidas = JSON.parse(localStorage.getItem('citas'));
+    const citasObtenidas = JSON.parse(localStorage.getItem('citas')) || [];
     administradorCita.citas = citasObtenidas;
     ui.mostrarCitasHTML(administradorCita);
   });
@@ -220,3 +219,9 @@ function editarItem(citaAEditar) {
 
   document.querySelector('button[type="submit"]').innerHTML = 'Guardar Cambios';
 }
+
+function sincronizarDatos() {
+  let citasString = JSON.stringify(administradorCita.citas);
+  localStorage.setItem('citas', citasString);
+}
+
